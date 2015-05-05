@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+		
+	<record id="ijarah_equip_reports" model="ir.actions.report.xml">
+                <field name="name">Ijarah Equip Report</field>
+                <field name="type">ir.actions.report.xml</field>
+                <field name="model">ijarah.hr.emp.equip</field>
+                <field name="report_name">ijarah_equip_report</field>
+                <field name="report_rml">ijarah_hr/report/ijarah_equip_report.jrxml</field>
+                <field name="report_type">pdf</field>
+                <field name="jasper_report">True</field>
+                <field name="jasper_output">pdf</field>
+        </record>
+
+	<record id="ijarah_equip_report_receive" model="ir.actions.report.xml">
+                <field name="name">Ijarah Equip Report Receive</field>
+                <field name="type">ir.actions.report.xml</field>
+                <field name="model">ijarah.hr.emp.equip</field>
+                <field name="report_name">ijarah_equip_report_receive</field>
+                <field name="report_rml">ijarah_hr/report/ijarah_equip_report_receive.jrxml</field>
+                <field name="report_type">pdf</field>
+                <field name="jasper_report">True</field>
+                <field name="jasper_output">pdf</field>
+        </record>
+
+	<record id="ijarah_hr_emp_sales_com_report" model="ir.actions.report.xml">
+                <field name="name">Ijarah Sales Commission Import</field>
+                <field name="type">ir.actions.report.xml</field>
+                <field name="model">ijarah.hr.emp.sales.com</field>
+                <field name="report_name">ijarah_sales_com_report</field>
+                <field name="report_rml">ijarah_hr/report/ijarah_sales_com_report.jrxml</field>
+                <field name="report_type">xls</field>
+                <field name="jasper_report">True</field>
+                <field name="jasper_output">xls</field>
+        </record>
+</data>
+</openerp>
+
+

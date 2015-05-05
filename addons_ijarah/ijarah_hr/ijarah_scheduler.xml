@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Iqama Expiry Scheduler --> 
+		<record id="ir_cron_iqama_expiry_mail" model="ir.cron">
+			<field name="name">Check Iqama Expiry</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">weeks</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False"/>
+			<field name="model">hr.employee</field>
+			<field name="function">check_iqama_expiry</field>
+			<field name="args" eval="'(False,)'"/>
+		</record>		
+	</data>
+</openerp>

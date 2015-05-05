@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- PARENT ID -->
+	<record id="hr_contract_type_ijarahltd" model="hr.contract.type">
+		<field name="name">IJARAH LTD</field>
+	</record>
+		<!-- IJarah -->
+	<record id="hr_contract_type_ijarah" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarahltd"/>
+		<field name="name">Ijarah</field>
+	</record>
+		<!-- IJarah / Saudi-->
+	<record id="hr_contract_type_ijarah_saudi" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah"/>
+		<field name="name">Saudi</field>
+	</record>
+		<!-- IJarah / Saudi / Normal-->
+	<record id="hr_contract_type_ijarah_saudi_normal" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah_saudi"/>
+		<field name="name">Normal</field>
+	</record>
+		<!-- IJarah / SAUDI / HRDF-->
+	<record id="hr_contract_type_ijarah_saudi_hrdf" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah_saudi"/>
+		<field name="name">HRDF</field>
+	</record>
+		<!-- IJarah / Expat-->
+	<record id="hr_contract_type_ijarah_expat" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah"/>
+		<field name="name">Expat</field>
+	</record>
+
+		<!-- IJarah / EXPAT / Professional-->
+	<record id="hr_contract_type_ijarah_expat_prof" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah_expat"/>
+		<field name="name">Professional</field>
+	</record>
+
+		<!-- IJarah / Expat / Labor-->
+	<record id="hr_contract_type_ijarah_expat_labor" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah_expat"/>
+		<field name="name">Labor</field>
+	</record>
+
+		<!-- IJarah / Expat / Custom-->
+	<record id="hr_contract_type_ijarah_expat_custom" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarah_expat"/>
+		<field name="name">Custom</field>
+	</record>
+
+		<!-- OutSource -->
+	<record id="hr_contract_type_outsource" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_ijarahltd"/>
+		<field name="name">OutSource</field>
+	</record>
+
+		<!-- OutSource / STO -->
+	<record id="hr_contract_type_outsource_sto" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_outsource"/>
+		<field name="name">STO</field>
+	</record>
+
+		<!-- OutSource / Direct/Sales -->
+	<record id="hr_contract_type_outsource_direct_sales" model="hr.contract.type">
+		<field name="parent_id" ref="hr_contract_type_outsource"/>
+		<field name="name">Afras</field>
+	</record>
+	
+    </data>
+</openerp>

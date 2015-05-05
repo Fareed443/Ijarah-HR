@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Inherit in Search View of Employee -->    
+	<record id="search_view_hr_employee" model="ir.ui.view">
+		<field name="name">Employees</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_filter"/>
+		<field name="arch" type="xml">
+		<xpath
+			expr="/search/group[@string='Group By...']" position="after" >
+				<filter string="Payment Type" icon="terp-personal" domain="[]" context="{'group_by':'payment_by'}"/>
+				<filter string="Active" icon="terp-personal" domain="[]" context="{'group_by':'activate'}"/>
+		</xpath>
+		</field>   
+	</record>    
+
+<!--Inherit Form View Of Employee  -->
+	
+		<record model="ir.ui.view" id="hr_emp_form">
+            	<field name="name">Employee Form</field>
+            	<field name="model">hr.employee</field>
+				<field name="inherit_id" ref="hr.view_employee_form"/>
+            	<field name="arch" type="xml">
+			<xpath expr="/form/sheet" position="before">
+				<header>
+					<button name="validate_state" string="Active" type="object" attrs="{'invisible':[('state','not in',['Draft'])]}"/>
+					<button name="terminate_state" string="Terminate" type="object" attrs="{'invisible':[('state','not in',['Active'])]}"/>
+					<button name="resigned_state" string="Resigned" type="object" invisible="True"/>
+					<button  name="check_iqama_expiry" string="Check Iqama Expiry" type="object" class="oe_highlight" invisible="True"/>
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Active,Resigned,Termination"/>
+				</header>
+			</xpath>
+  
+			<field name="image_medium" widget='image' class="oe_left oe_avatar" position="after">	
+				<div class="oe_title">
+					<h1>
+						<label for="emp_no" class="oe_edit_only"/>
+							<field name="emp_no"/>	
+					</h1>	
+				</div>	
+			</field>            		
+			<field name="image_medium" widget='image' class="oe_left oe_avatar" position="after">
+				<div class="oe_title">
+					<h1>
+						<label for="activate" class="oe_edit_only"/>
+							<field name="activate" attrs="{'readonly':[('state','in',['Active'])]}"/>	
+					</h1>	
+				</div>	 
+			</field>
+			<field name="name" position="replace">
+					<field name="name"/>
+			</field>
+
+			<field name="name" position="after">
+				<label for="arabic_name" class="oe_edit_only"/>
+					<field name="arabic_name"/>
+
+			</field>
+			<xpath expr="//div[@name='button_box']" position="after" >
+				<group invisible="True">
+					<label for="emp_start_date" />
+						<div>
+							<field name="emp_start_date"/>
+	
+						</div>
+					<label for="emp_end_date" />
+						<div>
+							<field name="emp_end_date"/>
+	
+						</div>
+				</group>
+			
+			</xpath>		
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='address_id']" position="replace" >
+				<field name="address_id" on_change="onchange_address_id(address_id)" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' string="Company" />
+			</xpath>		
+
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='company_id']" position="replace" >
+				<field name="company_id" invisible="True" groups="base.group_multi_company" on_change="onchange_company(company_id)"/>	
+			</xpath>
+
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='work_email']" position="replace" >
+				<field name="work_email"/>	
+			</xpath>		
+
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='birthday']" position="replace" >
+				<field name="birthday" on_change="onchange_dob(birthday)"/>	
+			</xpath>		
+
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='mobile_phone']" position="replace" >
+				<field name="mobile_phone" string="Contact#"/>	
+			</xpath>		
+
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='work_phone']" position="replace" >
+				<field name="work_phone" string="Extension#"/>	
+			</xpath>		
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='work_location']" position="replace" >
+				<field name="work_location" invisible="True"/>	
+			</xpath>		
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='coach_id']" position="replace" >
+				<field name="coach_id" invisible="True"/>	
+			</xpath>		
+
+			<xpath
+				expr="/form/sheet/notebook/page/group/group/field[@name='country_id']" position="after">
+					<field name="religion"/>                                                  
+			</xpath>
+
+			<xpath
+				expr="/form/sheet/notebook/page/group/group/field[@name='otherid']" position="replace">
+					<field name="otherid" invisible="True"/>                                                  
+			</xpath>
+
+			<xpath
+				expr="/form/sheet/notebook/page/group/group/field[@name='department_id']" position="replace">
+					<field name="department_id" on_change="onchange_department_id(department_id)" required="True"/>
+			</xpath>
+			
+			
+			<xpath
+			expr="/form/sheet/notebook/page/group/group/field[@name='address_home_id']" position="after">
+					<field name="border_no"/>
+					<field name="security_no"/>
+					<field name="visa_type" on_change="onchange_visa_type(visa_type)"/>
+					<field name="visa_det"/>
+					<field name="visa_duration" attrs="{'invisible':[('visa_type','not in',['Business','Visit','Iqama'])]}"/>
+
+			</xpath>
+
+			<xpath
+				expr="/form/sheet/notebook/page/group/group[@string='Position']" position="after">
+				<group string="Education">
+					<field name="qualification"/>
+					<field name="deg"/>
+					<field name="experience"/>
+				</group>						
+				<group>
+					<field name="doc_attach_ids" widget="many2many_binary" invisible="True"/>
+				</group>
+			</xpath>  
+			<xpath
+				expr="/form/sheet/notebook/page/field[@name='notes']" position="before">
+				<group string="Payment Method">
+					<field name="payment_type"/>
+					<field name="partner_bank" on_change="onchange_partner_bank(partner_bank)" required="True"/>
+					<field name="bank_bic"/>
+					<field name="iban_no"/>
+				</group>
+			</xpath>  
+			<xpath
+				expr="/form/sheet/notebook/page[@string='Personal Information']" position="after">
+					<page string="Iqama Details">
+						<field name="lines_iqama" string="Iqama Detail">
+							<tree string="Iqama Details">
+								<field name="doc_name"/>
+								<field name="iqama_start_date"/>	
+								<field name="iqama_end_date" on_change="onchange_iqama_end_date(iqama_start_date,iqama_end_date)"/>
+							</tree>
+							<form string="Iqama Details" >
+								<group col="2" colspan="4">
+									<field name="attachment_ids" widget="many2many_binary"/>
+								</group>	
+								<newline/>
+								<field name="doc_name" required="1"/>
+								<field name="iqama_start_date"/>	
+								<field name="iqama_end_date" on_change="onchange_iqama_end_date(iqama_start_date,iqama_end_date)"/>
+							</form>	
+						</field>
+					</page>					
+			</xpath>
+			<xpath
+				expr="/form/sheet/notebook/page[@string='Iqama Details']" position="after">
+				<page string="Certificates Attachment">
+						<field name="lines_certificate" string="Certificates Attachment">
+							<tree string="Certificates Attachment">
+								<field name="name"/>	
+							</tree>
+							<form string="Certificates Attachment" >
+								<group col="2" colspan="4">
+									<field name="emp_certificate_ids" widget="many2many_binary"/>
+								</group>	
+								<newline/>
+								<field name="name"/>	
+							</form>	
+						</field>
+				</page>
+			</xpath>  
+		</field>				                                                                      
+		</record> 
+		<!-- IS A Manager Field hide from HR Employee Screen(HR_Contract module) -->
+		<record model="ir.ui.view" id="hr_emp2_form">
+            	<field name="name">Employee Form</field>
+            	<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            	<field name="arch" type="xml">  
+			<field name="place_of_birth" position="replace">
+				<field name="place_of_birth" invisible="True"/>
+			</field>		
+
+			<field name="children" position="replace">
+				<field name="children" invisible="True"/>
+			</field>		
+		</field>
+		</record>  
+		
+		<!-- Visibility Field hide from HR Employee Screen (Hr_contract_module)-->
+		<record model="ir.ui.view" id="hr_emp3_form">
+            	<field name="name">Employee Form</field>
+            	<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="portal_hr_employees.view_employee_form"/>
+            	<field name="arch" type="xml">  
+			<xpath
+			   	expr="/form/sheet/notebook/page/group/group/field[@name='visibility']" position="replace" >
+				<field name="visibility" invisible="True"/>	
+			</xpath>		
+		</field>
+		</record>
+
+<!-- Inherit Tree view of  Employee 
+
+        <record model="ir.ui.view" id="hr_emp_tree">
+            	<field name="name">Employee Tree</field>
+            	<field name="model">hr.employee</field>
+      			<field name="inherit_id" ref="hr.view_employee_tree"/>
+            	<field name="arch" type="xml">
+                	<tree string="Employees">
+              		       <field name="emp_no"/>
+              		       <field name="arabic_name"/>
+					</tree>        	                                          
+           		</field>
+        </record>-->
+					<!-- Tree View Cutomize HR Employee -->
+	<record id="custom_view_employee_tree" model="ir.ui.view">
+		<field name="name">hr.employee.tree</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_tree"/>
+		<field name="arch" type="xml">
+		<xpath expr="//tree" position="replace">
+			<tree string="Employees" create="false">
+              		       <field name="emp_no"/>
+              		       <field name="arabic_name"/>
+				<field name="name"/>
+				<field name="work_phone"/>
+				<field name="work_email"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+				<field name="department_id"/>
+				<field name="job_id"/>
+				<field name="parent_id"/>
+				<field name="coach_id" invisible="1"/>
+			</tree>
+		</xpath>
+	</field>
+	</record>
+				<!-- Kanaban View Hr Employee -->
+    <record model="ir.ui.view" id="custom_hr_kanban_view_employees">
+        <field name="name">HR - Employess Kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">10</field>
+	<field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+	<xpath expr="//kanban" position="replace">
+            <kanban create="false">
+                <field name="last_login"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_employee_vignette">
+                            <div class="oe_employee_image">
+                                <a type="open"><img t-att-src="kanban_image('hr.employee', 'image_medium', record.id.value)" class="oe_employee_picture"/></a>
+                            </div>
+                            <div class="oe_employee_details">
+                                <h4>
+                                    <a type="open"><field name="name"/><t t-if="record.login.raw_value"> (<field name="login"/>)</t></a>
+                                </h4>
+                                <ul>
+                                    <li id="last_login">
+                                        <span t-if="record.last_login.raw_value &amp;&amp; record.last_login.raw_value.is().today()" class="oe_kanban_button" style="font-size: 100%%">
+                                              <t t-esc="record.last_login.raw_value.toString('HH:mm')"/>
+                                        </span>
+                                    </li>
+                                    <li t-if="record.job_id.raw_value"><field name="job_id"/></li>
+                                    <li t-if="record.work_location.raw_value"><field name="work_location"/></li>
+                                    <li t-if="record.work_phone.raw_value">Tel: <field name="work_phone"/></li>
+                                    <li t-if="record.mobile_phone.raw_value">Mobile: <field name="mobile_phone"/></li>
+                                    <li t-if="record.work_email.raw_value"><a t-attf-href="mailto:#{record.work_email.value}"><field name="work_email"/></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            $('.oe_employee_picture').load(function() { if($(this).width() > $(this).height()) { $(this).addClass('oe_employee_picture_wide') } });
+                        </script>
+                    </t>
+                </templates>
+            </kanban>
+	</xpath>
+        </field>
+    </record>
+
+</data>
+</openerp>
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data >
+
+        <!-- National Day leave -->
+        <record model="hr.holidays.status" id="holiday_status_national">
+            <field name="name">National Day</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- Maternity Leave -->
+        <record model="hr.holidays.status" id="holiday_status_maternity">
+            <field name="name">Maternity</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- Approved Leave -->
+        <record model="hr.holidays.status" id="holiday_status_appr">
+            <field name="name">Approved</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- UnApproved Leave -->
+        <record model="hr.holidays.status" id="holiday_status_unappr">
+            <field name="name">UnApproved</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- Business Leave -->
+        <record model="hr.holidays.status" id="holiday_status_business">
+            <field name="name">Business</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- Training Leave -->
+        <record model="hr.holidays.status" id="holiday_status_train">
+            <field name="name">Training</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+	<!-- Marriage Leave -->
+        <record model="hr.holidays.status" id="holiday_status_marriage">
+            <field name="name">Marriage</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Loan  --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_loan_form">
+			<field name="name">Employee Loan Form</field>
+			<field name="model">ijarah.hr.emp.loan</field>
+			<field name="arch" type="xml">  
+				<form string="Employee Loan" version="7.0">
+				<header>
+					<button name="validate_state" string="Confirm Loan" type="object" attrs="{'invisible':[('state','in',['Open','Close'])]}"/>			
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Open,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name)"/>
+						<field name="emp_name"/>
+						<field name="job_id"/>
+						<field name="salary"/>
+						<field name="loan_type"/>
+						<field name="deduct_type"/>
+					</group>
+					<separator string="Loan Calculation"/>
+							<group col="4" colspan="4">
+								<field name="req_amount"/>
+								<field name="apprv_by"/>
+								<field name="from_date" on_change="onchange_from_date(from_date)"/>
+								<field name="to_date" on_change="onchange_date(from_date,to_date)"/>
+								<field name="nom" on_change="onchange_nom(nom,req_amount)"/>
+								<field name="per_month"/>
+							</group>					
+					<notebook colspan="4">
+						<page string="Loan Detail" >
+							<button name="fetch_data" string="Fetch" type="object"/>
+								<field name="lines" >
+									<tree  string="Loan Rules" editable="bottom">
+										<field name="month"/>
+										<field name="name" sum='Total'/>   
+										<field name="paid" />
+										<field name="status" />
+										<field name="deduct" />
+										<field name="total_amount"/>
+									</tree>
+									<form string="Loan Rules">   
+										<field name="month"/>         
+										<field name="name" sum='Total'/>   
+										<field name="paid"/>
+										<field name="status" />
+										<field name="deduct" />
+										<field name="total_amount"/>
+									</form>		                                 	
+							</field>
+						</page>  
+					</notebook>	               		                                
+					<group col="8" colspan="8">		                             
+						<field name="total_install" string="Reconciled Amount"/> 
+						<field name="net_amount"/>
+					</group>
+						<field name="note" colspan="4"/>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Loan -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_loan_tree">
+			<field name="name">Employee Loan Tree</field>
+			<field name="model">ijarah.hr.emp.loan</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Loan" colors="blue:state=='Open'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Loan	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_loan">
+			<field name="name">Employee Loan</field>
+			<field name="res_model">ijarah.hr.emp.loan</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="sub_menu_ijarah_hr_emp_loan" name="Employee Loan" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_loan"/>       
+		
+	</data>
+</openerp>
+

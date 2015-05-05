@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee OT Form --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_overtime_form">
+			<field name="name">Employee OT Form</field>
+			<field name="model">ijarah.hr.emp.ot</field>
+			<field name="arch" type="xml">  
+				<form string="Employee OT" version="7.0">
+				<header>
+					<button name="validate_state" string="Validate" type="object" attrs="{'invisible':[('state','in',['Open','Close'])]}"/>			
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Open,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name,date_from,date_to)"/>
+						<field name="emp_name"/>
+						<field name="job_id"/>
+						<field name="salary"/>
+					</group>
+					<notebook>
+						<page string="OverTime Details" >
+							<group col="4" colspan="4">
+								<field name="date_from" />
+								<field name="date_to" />
+								<field name="ot_rule" required="1" attrs="{'invisible':[('salary','=',0.00 )]}" on_change="onchange_ot_rule(ot_rule)"/>
+							</group>	
+							<group col="4" colspan="4" attrs="{'invisible':[('ot_rule','not in',['Amount','Hours'])]}">
+								<field name="no_of_hours" attrs="{'invisible':[('ot_rule','in',['Amount'])],'required':[('ot_rule','in',['Hours'])]}" on_change="onchange_hours_rules(no_of_hours,hours_rules)" />
+								<field name="hours_rules" attrs="{'invisible':[('ot_rule','in',['Amount'])],'required':[('ot_rule','in',['Hours'])]}" />
+
+								<field name="hourly_charge" attrs="{'invisible':[('ot_rule','in',['Amount'])],'required':[('ot_rule','in',['Hours'])]}" on_change="onchange_hourly_charge(salary,hourly_charge)"/>
+
+								<newline/>								
+							<field name="ot_amount" required="1"/>
+							<field name="paid" attrs="{'invisible':[('state','in',['Draft'])]}"/>
+							</group>					
+						</page>				
+					</notebook>
+						<group>
+							<field name="note" colspan="4" placeholder="Add a comments"/>
+						</group>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Deduction -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_overtime_tree">
+			<field name="name">Employee Deduction Tree</field>
+			<field name="model">ijarah.hr.emp.ot</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Deduction" colors="blue:state=='Open'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+			</tree>        	               
+			</field>
+		</record>	
+
+ 	<record model="ir.actions.act_window" id="action_emp_ot">
+                <field name="name">Employee OT</field>
+            	<field name="type">ir.actions.act_window</field>
+                <field name="res_model">ijarah.hr.emp.ot</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+	</record>
+<!--
+	<record id="ijarah_emp_ot_tree_1" model="ir.actions.act_window.view">
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="ijarah_hr_emp_overtime_tree"/>
+		<field name="act_window_id" ref="action_emp_ot"/>
+	</record>	
+	
+	<record id="ijarah_emp_ot_form_1" model="ir.actions.act_window.view">
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="ijarah_hr_emp_overtime_form"/>
+		<field name="act_window_id" ref="action_emp_ot"/>
+	</record>
+-->
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="menu_ijarah_hr_emp_overtime1" name="Employee OT" parent="menu_hr_emp_loan" action="action_emp_ot"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

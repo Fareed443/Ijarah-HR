@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="hr_rule_loan" model="hr.salary.rule">
+            <field name="name">Loan Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">LD</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.loan_amount</field>
+        </record>
+
+        <record id="hr_rule_other_ded" model="hr.salary.rule">
+            <field name="name">Other Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">OD</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.deduct_amount</field>
+        </record>
+
+        <record id="hr_rule_gosi_sanid" model="hr.salary.rule">
+            <field name="name">Gosi+Sanid Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">GSD</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.gosi+contract.sanid</field>
+        </record>
+
+        <record id="hr_rule_asset_ded" model="hr.salary.rule">
+            <field name="name">Assets Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">AD</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.asset_deduct_amount</field>
+        </record>
+
+        <record id="hr_rule_unpaid_leave" model="hr.salary.rule">
+            <field name="name">Unpaid Leave Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">Unpaid Leave</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.basic_salary / 30) * (payslip.leave_unpaid_amount)</field>
+        </record>
+
+        <record id="hr_rule_unapprove_leave" model="hr.salary.rule">
+            <field name="name">Unapprove Leave Deduction</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">Unapprove Leave</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.basic_salary / 30) * (payslip.leave_unapprove_amount)</field>
+        </record>
+
+        <record id="hr_rule_housing_allw" model="hr.salary.rule">
+            <field name="name">Housing Allowance</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">HA</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.housing_allo</field>
+        </record>
+
+        <record id="hr_rule_trans_allw" model="hr.salary.rule">
+            <field name="name">Transportation Allowance</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">TA</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.trans_allo</field>
+        </record>
+
+        <record id="hr_rule_eos_allw" model="hr.salary.rule">
+            <field name="name">End of Service Allowance</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">EOS</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.eos_amount</field>
+        </record>
+
+        <!-- Salary Structure -->
+
+         <record id="ijarah_basic_structure" model="hr.payroll.structure">
+            <field name="code">BS</field>
+            <field name="name">Basic Structure</field>
+            <field eval="[(6, 0, [ref('hr_payroll.hr_rule_basic'), ref('hr_payroll.hr_rule_taxable'),ref('hr_payroll.hr_rule_net'),ref('hr_rule_loan'),ref('hr_rule_other_ded'),ref('hr_rule_gosi_sanid'),ref('hr_rule_asset_ded'),ref('hr_rule_unpaid_leave'),ref('hr_rule_unapprove_leave'),ref('hr_rule_housing_allw'),ref('hr_rule_trans_allw'),ref('hr_rule_eos_allw')])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</openerp>

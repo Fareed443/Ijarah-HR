@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Resignation Form --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_resign_form">
+			<field name="name">Employee Resignation Form</field>
+			<field name="model">ijarah.hr.emp.resign</field>
+			<field name="arch" type="xml">  
+				<form string="Employee Resignation Form" version="7.0">
+				<header>
+					<button name="approved_state" string="Approved" type="object" attrs="{'invisible':[('state','not in',['Draft'])]}" groups="base.group_hr_user" />
+					<button name="cancel_state" string="Cancel" type="object" attrs="{'invisible':[('state','not in',['Draft','Approved'])]}" groups="base.group_hr_manager"/>
+					<button name="resigned_state" string="Confirm Resignation" type="object" attrs="{'invisible':[('state','not in',['Approved'])]}" groups="base.group_hr_manager"/>
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Approved,Cancel,Resigned"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name)" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+						<field name="emp_name" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+						<field name="grade" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+						<field name="job_id" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+						<field name="dept_id" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+					</group>
+					<notebook>
+						<page string="Details" >
+							<group col="4" colspan="4">
+								<field name="contact_no" on_change="onchange_contact_no(contact_no)" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+								<field name="date_of_subm" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+								<field name="last_work_day" required="True" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+								<field name="notice_period" attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+							</group>					
+						</page>	
+					</notebook>
+					<group col="4" colspan="4">
+						<field name="approved_by"/>
+					</group>	
+				<field name="resign_reason" colspan="4" placeholder="Add a Reason..." attrs="{'readonly':[('state','not in',['Draft'])]}"/>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Resignation Form -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_resign_tree">
+			<field name="name">Employee Resignation Tree</field>
+			<field name="model">ijarah.hr.emp.resign</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Bonus" colors="green:state=='Approved';red:state=='Cancel'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="grade"/>
+				<field name="job_id"/>
+				<field name="dept_id"/>
+				<field name="date_of_subm"/>
+				<field name="last_work_day" />
+				<field name="state"/>
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Resignation Form -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_resign">
+			<field name="name">Employee Resignation</field>
+			<field name="res_model">ijarah.hr.emp.resign</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation"/>
+		<menuitem id="menu_ijarah_hr_emp_resign" name="Employee Resign" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_resign" sequence="60"/>
+	</data>
+</openerp>
+  
+        
+   
+

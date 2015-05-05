@@ -1,0 +1,20 @@
+id,name,groups_id/id
+hr.menu_hr_root,Human Resources,"group_ijarah_manager,base.group_hr_manager"
+hr.menu_hr_configuration,Configuration,"group_ijarah_manager"
+
+hr_contract.hr_menu_contract,Contracts,"group_ijarah_manager"
+hr_contract.hr_menu_contract_type,Contract Type,"group_ijarah_manager"
+ijarah_hr.tree_view_hr_contract_type,Contract Structure,"group_ijarah_manager"
+hr_contract.next_id_56,Contract,"group_ijarah_manager"
+
+hr_payroll.menu_hr_root_payroll,Payroll,"group_ijarah_manager"
+hr_holidays.menu_open_ask_holidays,Leaves,"group_ijarah_manager"
+ijarah_hr.menu_hr_ijarah_grade,Grades,ijarah_hr.group_ijarah_manager
+ijarah_hr.menu_ijarah_visa_type,Visa Types,ijarah_hr.group_ijarah_manager
+ijarah_hr.ijarah_main_menu_dashboard,Ijarah Dashboard,ijarah_hr.group_ijarah_manager
+
+
+
+
+
+

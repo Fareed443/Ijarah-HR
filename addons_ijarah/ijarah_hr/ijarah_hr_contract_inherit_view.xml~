@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!-- Inherit in Employee From (Bank Account bank_account_id)  Contract Type-->    
+<!--	<record id="ijarah_hr_emp_from_view_11" model="ir.ui.view">-->
+<!--		<field name="name">hr.employee</field>-->
+<!--		<field name="model">hr.employee</field>-->
+<!--		<field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>-->
+<!--		<field name="arch" type="xml">-->
+<!--		<data>-->
+<!--			<xpath -->
+<!--				expr="//field[@name='bank_account_id']" position="replace">-->
+<!--				<field name="bank_account_id" invisible="True"/>-->
+<!--			</xpath>-->
+<!--		</data>-->
+<!--		</field>   -->
+<!--	</record>    -->
+
+<!-- Inherit in Contract Form (Bank Account bank_account_id)  Contract Type-->    
+	<record id="ijarah_hr_contract_account_inherit" model="ir.ui.view">
+		<field name="name">hr.contract</field>
+		<field name="model">hr.contract</field>
+		<field name="inherit_id" ref="hr_payroll_account.hr_contract_form_inherit"/>
+		<field name="arch" type="xml">
+		<data>
+			<xpath
+				expr="//group[@string='Accounting']" position="replace">
+						<group string="Accounting" invisible="True"/>
+			</xpath>			
+		</data>
+		</field> 
+	</record>    
+
+
+<!-- Inherit in Search View of Contract -->    
+	<record id="search_view_ijarah__hr_contract" model="ir.ui.view">
+		<field name="name">HR Contract</field>
+		<field name="model">hr.contract</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_view_search"/>
+		<field name="arch" type="xml">
+		<xpath
+			expr="/search/group[@string='Group By...']" position="after" >
+				<filter string="Contract Type" icon="terp-personal" domain="[]" context="{'group_by':'type_id_char'}"/>
+		</xpath>
+		</field>   
+	</record>    
+
+<!-- Inherit in Employee Contract Type-->    
+	<record id="ijarah_hr_contract_type_view_form" model="ir.ui.view">
+		<field name="name">hr.contract.type.view.form</field>
+		<field name="model">hr.contract.type</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="parent_id"/>
+			</field>
+		</field>   
+	</record>
+
+	<record id="ijarah_hr_contract_type_view_form" model="ir.ui.view">
+		<field name="name">hr.contract.type.view.form</field>
+		<field name="model">hr.contract.type</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="parent_id"/>
+			</field>
+		</field>   
+	</record>    
+        
+<!--Inherit Form View Of Employee Contract  -->
+	
+	<record model="ir.ui.view" id="ijarah_hr_emp_cont_form">
+            	<field name="name">Employee Contract Form</field>
+            	<field name="model">hr.contract</field>
+      		<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            	<field name="arch" type="xml">
+			<xpath expr="/form/sheet" position="before">
+				<header>
+					<button name="validate_state" string="Confirm" type="object" attrs="{'invisible':[('state','in',['Confirm'])]}"/>
+					<button name="roll_back" string="Roll Back" type="object" attrs="{'invisible':[('state','not in',['Confirm'])]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Confirm"/>
+				</header>
+			</xpath>
+					<field name="name"  position="replace">
+						<field name="name"  placeholder="Employee No" 
+attrs="{'readonly':['|',('type_id_char','=','Ijarah'),('state','=','Confirm')],'invisible':[('type_id_char','not in', ['Ijarah','OutSource'])]}"/>
+					</field>						
+
+					<field name="wage"  position="replace">
+						<field name="wage"  readonly="1" string="Total Salary" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+					</field>
+					<field name="employee_id"  position="replace" >
+						<field name="employee_id" invisible="True"/> 
+						<field name="employee_name" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+						<field name="employee_arabic_name" required="1" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+						<field name="dept_id" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+						<field name="ds" invisible="True"/>
+						<field name="cd" on_change="onchange_year(cd,ds)" invisible="True"/>
+						<field name="year_diff" invisible="True"/>
+					</field>
+					<field name="advantages"  position="replace">
+						<field name="advantages" invisible="True"/>
+					</field>
+					
+					<field name="type_id"  position="replace">
+							<label for="type_id" string="Contract Type"/>
+							<div>
+			<field name="type_id" class="oe_inline" on_change="onchange_type_id(type_id,year_diff)" attrs="{'readonly':[('state','in',['Confirm'])]}"/> / <field name="contract_type" class="oe_inline" nolabel="1" on_change="onchange_contract_type(contract_type)" attrs="{'readonly':[('state','in',['Confirm'])]}"/> / <field name="contract_detail" nolabel="1" attrs="{'required':[('type_id_char','=','Ijarah')],'readonly':[('state','in',['Confirm'])]}"/>		
+							</div>
+							<field name="employee_contract_type" attrs="{'readonly':[('state','in',['Confirm'])]}" required="1"/>
+							<field name="contract_dur" required="1" attrs="{'readonly':[('state','in',['Confirm'])]}"/>	
+							<field name="type_id_char" invisible="True"/>
+
+					</field>
+					<xpath
+					   	expr="/form/sheet/notebook/page[@name='information']" position="after">
+							<page string="Band / Grade/ Salary Details">
+								<group string="Details" col="4" colspan="4">
+									<field name="title"   attrs="{'readonly':[('state','in',['Confirm'])]}" on_change="onchange_title(title)" required="1"/>
+
+									<field name="band"  readonly="1"/>
+
+									<field name="grade"  readonly="1"/>
+
+									<field name="role" readonly="1"/>
+
+									<field name="sal_range"  readonly="1"/>
+
+									<field name="basic_salary" required="1" on_change="onchange_basic(sal_range,title,basic_salary)" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+
+									<field name="housing_allo" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="trans_allo" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="eos_per_month" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="if_saudi" on_change="onchange_gosi(if_saudi,basic_salary,housing_allo,nationality)" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="gosi" attrs="{'invisible':[('if_saudi','in', False )]}"/>
+									<field name="sanid" attrs="{'invisible':[('if_saudi','in', False )]}"/>
+								</group>	
+							</page>	
+
+							<page string="Air Tickets Info">
+								<group string="Air Ticket Details" col="4" colspan="4">
+									<field name="employee_ticket" required="1" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="ticket_qty" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+									<field name="exit_qty" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								</group>	
+							</page>	
+									
+
+					</xpath>
+					<xpath
+					   	expr="/form/sheet/notebook/page/group/group/field[@name='working_hours']" position="replace">
+						<field name="working_hours" invisible="True"/>
+					</xpath>
+					<xpath
+					   	expr="/form/sheet/notebook/page/group/group/field[@name='working_hours']" position="after">
+						<group string="Status" col="2" colspan="4">
+								<field name="gender" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="marital" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="birthday" on_change="onchange_dob(birthday)" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+						</group>		
+
+					</xpath>	
+
+					<xpath
+					   	expr="/form/sheet/notebook/page[@string='Work Permit']" position="replace">
+	                        <page string="Work Permit" invisible="True"/>
+					</xpath>	
+
+					<xpath
+					   	expr="/form/sheet/notebook/page/group/group/field[@name='advantages']" position="after" >
+							<group string="Personal Information" col="2" colspan="4">
+								<field name="nationality"  required="1" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="religion" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="identification_no"  required="1" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="passport" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+							</group>
+						<group string="Education" col="2" colspan="4">
+								<field name="qualification" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="degree" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+								<field name="exp" attrs="{'readonly':[('state','in',['Confirm'])]}"/>
+						</group>		
+
+					</xpath>
+				</field>				                                                                      
+		</record>
+		
+		<record id="contract_type_tree_view" model="ir.ui.view">
+			<field name="name">Contract Structure</field>
+			<field name="model">hr.contract.type</field>
+			<field name="field_parent">child_id</field>
+			<field name="arch" type="xml">
+			<tree toolbar="True" string="Contract List View">
+				<field name="name"/>
+			</tree>
+			</field>
+		</record>
+
+		<record id="hr_contract_type_custom_action" model="ir.actions.act_window">
+		    <field name="name">Contract Structure</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">hr.contract.type</field>
+		    <field name="domain">[('parent_id','=',False),('name','=','IJARAH LTD')]</field>
+		    <field name="view_type">tree</field>
+		    <field name="view_id" ref="contract_type_tree_view"/>
+		</record>
+       
+        <menuitem action="hr_contract_type_custom_action" id="tree_view_hr_contract_type" parent="hr_contract.next_id_56" sequence="7" groups="base.group_no_one" name="Contract Structure"/>
+
+	</data>
+</openerp>

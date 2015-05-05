@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data >
+
+	<record id="ijarah_hr_product_laptop" model="ijarah.product">
+		<field name="name">Laptop</field>
+	</record>
+
+	<record id="ijarah_hr_product_desktop_comp" model="ijarah.product">
+		<field name="name">Desktop Computer</field>
+	</record>
+
+	<record id="ijarah_hr_product_printer" model="ijarah.product">
+		<field name="name">Printer</field>
+	</record>
+
+	<record id="ijarah_hr_product_headphones" model="ijarah.product">
+		<field name="name">Headphones</field>
+	</record>
+
+	<record id="ijarah_hr_product_simcard" model="ijarah.product">
+		<field name="name">Sim Card</field>
+	</record>
+
+	<record id="ijarah_hr_product_internet" model="ijarah.product">
+		<field name="name">Internet Data Sim</field>
+	</record>
+
+	<record id="ijarah_hr_product_mobile" model="ijarah.product">
+		<field name="name">Mobile Device</field>
+	</record>
+
+	<record id="ijarah_hr_product_wifi" model="ijarah.product">
+		<field name="name">Wifi Device</field>
+	</record>
+
+	<record id="ijarah_hr_product_stamp" model="ijarah.product">
+		<field name="name">Stamp</field>
+	</record>
+
+	<record id="ijarah_hr_product_keys" model="ijarah.product">
+		<field name="name">Keys</field>
+	</record>
+
+    </data>
+</openerp>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+		<record id="ijarah_hr_non_operational_staff" model="ijarah.hr.grade">
+			<field name="name">Non Operational Staff</field>
+			<field name="band">30</field>
+			<field name="grade">G21 to G30</field>
+			<field name="roles">Drivers,Tea Boy,Technicians</field>
+			<field name="sal_ranges">Between SAR 1000 to 2500</field>		
+		</record>
+
+		<record id="ijarah_hr_operational_staff" model="ijarah.hr.grade">
+			<field name="name">Operational Staff</field>
+			<field name="band">20</field>
+			<field name="grade">G16 to G20</field>
+			<field name="roles">Officers,Clerks</field>
+			<field name="sal_ranges">Between SAR 2500 to 5000</field>		
+		</record>
+
+		<record id="ijarah_hr_senior_operational_staff" model="ijarah.hr.grade">
+			<field name="name">Senior Operational Staff</field>
+			<field name="band">15</field>
+			<field name="grade">G13 to G15</field>
+			<field name="roles">Assistant Managers</field>
+			<field name="sal_ranges">Between SAR 5000 to 10000</field>		
+		</record>
+
+		<record id="ijarah_hr_middle_manager" model="ijarah.hr.grade">
+			<field name="name">Middle Managers</field>
+			<field name="band">10</field>
+			<field name="grade">G10 to G12</field>
+			<field name="roles">Managers</field>
+			<field name="sal_ranges">Between SAR 10000 to 20000</field>		
+		</record>
+
+		<record id="ijarah_hr_executive_manager" model="ijarah.hr.grade">
+			<field name="name">Executive Management</field>
+			<field name="band">4</field>
+			<field name="grade">G4 to G9</field>
+			<field name="roles">Departments Managers,General Manager</field>
+			<field name="sal_ranges">Between SAR 20000 to 50000</field>		
+		</record>
+
+    </data>
+</openerp>

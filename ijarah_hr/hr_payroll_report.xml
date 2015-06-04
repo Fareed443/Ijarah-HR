@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <report
+            auto="False"
+            id="my_payslip_report"
+            model="hr.payslip"
+            name="payslip"
+            rml="ijarah_hr/report/my_payslip.rml"
+            string="Employee PaySlip Fareed" 
+            usage="default"/>		
+            
+    </data>
+</openerp>

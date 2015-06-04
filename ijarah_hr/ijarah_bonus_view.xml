@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Bonus --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_bonus_form">
+			<field name="name">Employee Bonus Form</field>
+			<field name="model">ijarah.hr.emp.bonus</field>
+			<field name="arch" type="xml">  
+				<form string="Employee Bonus" version="7.0">
+				<header>
+					<button name="validate_state" string="Validate" type="object" attrs="{'invisible':[('state','in',['Open','Close'])]}"/>			
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Open,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name,date_from,date_to)"/>
+						<field name="emp_name"/>
+						<field name="job_id"/>
+						<field name="salary"/>
+					</group>
+					<notebook>
+						<page string="Bonus Calculation" >
+							<group col="4" colspan="4">
+								<field name="bonus_amount" required="1"/>
+								<newline/>
+								<field name="date_from" />
+								<field name="date_to" on_change="onchange_date(date_from,date_to)"/>
+								<field name="nom" />				
+								<field name="repeat_bonus" invisible="True"/>
+
+								<field name="paid" attrs="{'invisible':[('state','in',['Draft'])]}"/>
+							</group>					
+						</page>				
+					</notebook>
+					<notebook colspan="4">
+						<page string="Bonus Detail" >
+							<button name="fetch_data" string="Fetch" type="object"/>
+								<field name="lines" >
+									<tree  string="Bonus Details" editable="bottom">
+										<field name="month"/>
+										<field name="name" sum='Total'/>   
+										<field name="paid" />
+										<field name="status" />
+									</tree>
+									<form string="Bonus Details">   
+										<field name="month"/>         
+										<field name="name" sum='Total'/>   
+										<field name="paid"/>
+										<field name="status" />
+									</form>		                                 	
+							</field>
+						</page>  
+					</notebook>	               		                                
+					<field name="note" colspan="4" />		
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Bonus -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_bonus_tree">
+			<field name="name">Employee Bonus Tree</field>
+			<field name="model">ijarah.hr.emp.bonus</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Bonus" colors="blue:state=='Open'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Bonus	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_bonus">
+			<field name="name">Employee Bonus</field>
+			<field name="res_model">ijarah.hr.emp.bonus</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="menu_ijarah_hr_emp_bonus" name="Employee Bonus" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_bonus"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

@@ -1,0 +1,12 @@
+Import Excel
+For the month of Sept-
+Chexk for Valid data (Manager Will check it)
+IF TRUE :
+	Message Box Appears 
+	Are you Sure you want to update it
+	If YEs:	
+		Update date into the Sales Commission Table
+	IF no:
+		Goto the Excel File
+IF False:
+	Check the excel File 

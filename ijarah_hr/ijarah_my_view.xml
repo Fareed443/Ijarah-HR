@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	
+		<!-- Sales dashboard -->
+		<record model="ir.ui.view" id="ijarah_iqama_dasboard_tree_view">
+			<field name="name">IQAMA</field>
+			<field name="model">ijarah.hr.emp.iqama</field>
+			<field name="arch" type="xml">
+				<tree string="Employee ID" colors="red:'parent.state'=='Active'">
+					<field name="iqama_ids" />
+					<field name="iqama_end_date" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_ijarah_iqamas" model="ir.actions.act_window">
+			<field name="name">Iqama Expiry Dashboard</field>
+			<field name="res_model">ijarah.hr.emp.iqama</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">['&amp;',('iqama_end_date','&lt;=',(context_today()+
+				relativedelta(months=2)).strftime('%Y-%m-%d')),
+				('iqama_end_date','&gt;=',(context_today()-
+				relativedelta(days=1)).strftime('%Y-%m-%d'))]</field>
+		</record>
+
+		<record id="ijarah_iqama_dasboard_tree_view1" model="ir.actions.act_window.view">
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="ijarah_iqama_dasboard_tree_view" />
+			<field name="act_window_id" ref="action_ijarah_iqamas" />
+		</record>
+
+		<record id="board_ijarah_form" model="ir.ui.view">
+			<field name="name">board.ijarah.form</field>
+			<field name="model">board.board</field>
+			<field name="arch" type="xml">
+				<form string="Ijarah Dashboard" version="7.0">
+					<board style="2-1">
+						<column>
+							<action name="%(action_ijarah_iqamas)d" string="Iqama Expiry Dashboard" />
+						</column>
+					</board>
+				</form>
+			</field>
+		</record>
+
+		<record id="open_board_ijarah" model="ir.actions.act_window">
+			<field name="name">HR IJARAH</field>
+			<field name="res_model">board.board</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="board_ijarah_form" />
+		</record>
+
+		<menuitem id="ijarah_main_menu_dashboard" parent="hr.menu_hr_root"  name="Ijarah Dashboard" sequence="7"/>
+		<menuitem id="sub_menu_ijarah_iqama_dashboard" parent="ijarah_hr.ijarah_main_menu_dashboard" name="Iqama Expiry" action="open_board_ijarah"/>
+
+	</data>
+</openerp>

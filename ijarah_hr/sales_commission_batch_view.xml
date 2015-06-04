@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!-- Sequences Reference No-->
+		<record id="ijarah_emp_sales_com_ref" model="ir.sequence.type">
+		<field name="name">Employee Number </field>
+		<field name="code">ijarah.sales.com.batch</field>
+		</record>
+
+		<record id="ijarah_emp_sales_com_id" model="ir.sequence">
+		<field name="name">Employee Number Sequence</field>
+		<field name="code">ijarah.sales.com.batch</field>
+		<field name="prefix">%(year)s%(month)s%(day)s</field>
+		<field name="padding">5</field>
+		</record>
+
+<!-- Form View Of Employee Sales Commission --> 
+	
+	<record model="ir.ui.view" id="ijarah_sales_com_batch_form">
+		<field name="name">Sales Commission Batch Form</field>
+		<field name="model">ijarah.sales.com.batch</field>
+		<field name="arch" type="xml">  
+		<form string="Sales Commission Import" version="7.0">
+		<header>
+			<button name="delete_state" string="Delete Imported Data" type="object" attrs="{'invisible':[('state','in',['Confirmed'])]}"/>
+			<button name="valid_state" string="Confirm" type="object" attrs="{'invisible':[('state','in',['Confirmed'])]}"/>
+			<field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed"/>
+		</header>
+		<sheet>
+			<label for="name" class="oe_edit_only" invisible="True"/>
+				<h1>
+					<field name="name" invisible="True"/>
+				</h1>
+			<label for="desc" class="oe_edit_only"/>
+				<h1>	
+					<field name="desc" required="1"/>
+				</h1>
+                        <label for="date_from" class="oe_edit_only" string="Period"/>
+                        <h2>
+                            From <field name="date_from"/>
+                            to <field name="date_to"/>
+                        </h2>
+
+		<group col="4" colspan="4">
+			<field name="date" on_change="onchange_date(date,create_file_date)" attrs="{'required':[('state','in',['Draft'])]}"/>
+			<field name="form_status" invisible="True"/>
+			<field name="create_file_date" invisible="True"/>
+			<field name="create_file_time" invisible="True"/>
+		</group>
+		<group col="4" colspan="4">	
+			<field name="ref_no" attrs="{'invisible':[('state','not in',['Confirmed'])]}"/>
+			<field name="data" filename="file_name" attrs="{'invisible':[('state','not in',['Confirmed'])]}"/>
+        		<button name="export_bank_statement" string="My Test" type="object" icon="gtk-execute" class="oe_highlight" invisible="True"/>
+		</group>	
+
+		<separator string="Sales Commission"/>
+		<field name="sales_com_ids"/>
+		</sheet>
+		</form>
+		</field>
+	</record>
+
+		<!-- Tree View Of Employee Sales Commission -->
+
+	<record model="ir.ui.view" id="ijarah_sales_com_batch_tree">
+		<field name="name">Employee Sales Commission Tree</field>
+		<field name="model">ijarah.sales.com.batch</field>
+		<field name="arch" type="xml">
+		<tree string="Employee Sales Commission" colors="blue:state=='Confirmed'" >
+			<field name="desc"/>
+			<field name="ref_no"/>
+			<field name="date"/>
+			<field name="state"/>
+		</tree>        	               
+		</field>
+	</record>	
+		<!-- Action View of Employee Sales Commission	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_sales_com_batch">
+			<field name="name">Sales Commission Batch</field>
+			<field name="res_model">ijarah.sales.com.batch</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="menu_ijarah_sales_com_batch" name="Import Sales Commission File" parent="menu_hr_emp_loan" action="action_ijarah_sales_com_batch" sequence="50"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

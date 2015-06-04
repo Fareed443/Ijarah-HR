@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="hr_emp_payslip_form">
+            	<field name="name">Employee Payslip Form </field>
+            	<field name="model">hr.payslip</field>
+      		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            	<field name="arch" type="xml"> 			                    
+					<button string="Refund" name="refund_sheet" position="after">
+ 						<button string="Generate Bank Statement"  states="confirm,done" type='object'/>
+					</button>
+					<field name="contract_id" position="replace">
+							<field name="contract_id" string="Contract/Employee#"/>
+					</field>
+
+					<field name="contract_id" position="before" string="Contract">
+							<field name="employee_name"/>
+				 			<!--<field name="cost_center" /> -->
+				 			<field name="credit_pay" />
+					</field>
+					<field name="credit_note" position="after">					
+			 			<field name="if_ot" />
+			 			<field name="bonus_amount" />
+			 			<field name="gross_amount"/>
+			 			<field name="net_amount"/>
+			 			<newline/>
+						<button  name="fetch_bonus_amount" string="Check Loan" type="object" class="oe_highlight" invisible="True"/>
+						<button  name="post_loan" string="Post Loan" type="object" class="oe_highlight" invisible="True" />
+					</field>
+					
+						<xpath
+			 				expr="/form/sheet/notebook/page[@string='Salary Computation']/field[@name='line_ids']/tree[@string='Salary Structure']/field[@name='total']" position="after">
+							<field name="deduct"/> 
+							<field name="other_deduct" />
+							<field name="ot_amount"/>  
+							<field name="total_amount"/>
+						</xpath>   								
+				</field>				                                                                      
+		</record>
+
+
+
+
+
+	</data>
+</openerp>

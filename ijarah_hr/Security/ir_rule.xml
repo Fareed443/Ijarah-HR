@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+<!-- Ijarah Employee -->
+	    <record id="group_rule_ijarah_outsource_employee" model="ir.rule">
+		<field name="name">Ijarah Employee</field>
+		<field model="ir.model" name="model_id" ref="model_hr_employee"/>
+		<field name="domain_force">[('cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="global" eval="True"/>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Contract -->
+
+	    <record id="group_rule_ijarah_outsource_contract" model="ir.rule">
+		<field name="name">Ijarah Contract</field>
+		<field model="ir.model" name="model_id" ref="model_hr_contract"/>
+		<field name="domain_force">[('type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Assets -->
+
+	    <record id="group_rule_ijarah_outsource_equipment" model="ir.rule">
+		<field name="name">Ijarah Assets</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_equip"/>
+		<field name="domain_force"> [('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Payslip -->
+
+	    <record id="group_rule_ijarah_outsource_payslip" model="ir.rule">
+		<field name="name">Ijarah Payslip</field>
+		<field model="ir.model" name="model_id" ref="model_hr_payslip"/>
+		<field name="domain_force">[('employee_id.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+ 	       
+<!-- Ijarah Deduction -->
+
+	    <record id="group_rule_ijarah_outsource_deduct" model="ir.rule">
+		<field name="name">Ijarah Deduction</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_deduct"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah OT -->
+
+	    <record id="group_rule_ijarah_outsource_ot" model="ir.rule">
+		<field name="name">Ijarah OT</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_ot"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Bonus -->
+
+	    <record id="group_rule_ijarah_outsource_bonus" model="ir.rule">
+		<field name="name">Ijarah Bonus</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_bonus"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Loan -->
+
+	    <record id="group_rule_ijarah_outsource_loan" model="ir.rule">
+		<field name="name">Ijarah Loan</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_loan"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah EOS -->
+
+	    <record id="group_rule_ijarah_outsource_eos" model="ir.rule">
+		<field name="name">Ijarah EOS</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_eos"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah Training Expense -->
+
+	    <record id="group_rule_ijarah_outsource_training" model="ir.rule">
+		<field name="name">Ijarah Training Expense</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_train_exp"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+
+<!-- Ijarah  Resignation-->
+
+	    <record id="group_rule_ijarah_outsource_resign" model="ir.rule">
+		<field name="name">Ijarah Resignation</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_resign"/>
+		<field name="domain_force">[('name.cont_id.type_id_char','in', ['OutSource'])]</field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah  Iqama-->
+
+	    <record id="group_rule_ijarah_outsource_iqama" model="ir.rule">
+		<field name="name">Ijarah Iqama</field>
+		<field model="ir.model" name="model_id" ref="model_ijarah_hr_emp_iqama"/>
+		<field name="domain_force"> [('iqama_ids.cont_id.type_id_char','in', ['OutSource'])] </field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+<!-- Ijarah  Holidays-->
+
+	    <record id="group_rule_ijarah_outsource_holidays" model="ir.rule">
+		<field name="name">Ijarah Leave</field>
+		<field model="ir.model" name="model_id" ref="model_hr_holidays"/>
+		<field name="domain_force"> [('employee_id.cont_id.type_id_char','in', ['OutSource'])] </field>
+		<field name="groups" eval="[(4,ref('ijarah_hr.group_ijarah_outsource_manager')),]"/>
+ 	    </record>
+
+	</data>
+</openerp> 

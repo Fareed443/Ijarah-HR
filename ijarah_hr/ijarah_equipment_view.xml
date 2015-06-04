@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Assets --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_equip_form">
+			<field name="name">Employee Assets Form</field>
+			<field name="model">ijarah.hr.emp.equip</field>
+			<field name="arch" type="xml">  
+			<form string="Employee Assets" version="7.0">
+				<header>
+					<button icon="STOCK_PRINT" name="start_report" string="Asset Assign Report" type="object" class="oe_highlight" attrs="{'invisible':[('state','not in','Delivered')]}"/>
+
+					<button icon="STOCK_PRINT" name="receive_report" string="Asset Return Report" type="object" class="oe_highlight" attrs="{'invisible':[('state','not in','Received')]}"/>
+
+					<button name="deliver_state" string="Delivered" type="object" attrs="{'invisible':[('state','not in',['Draft'])]}"/>			
+
+					<button name="received_state" string="Received" type="object" attrs="{'invisible':[('state','not in',['Delivered'])]}"/>			
+
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Delivered,Received"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name)"/>
+						<field name="emp_name"/>
+						<field name="job_id"/>
+						<field name="salary" />
+						<field name="received_date"  attrs="{'invisible':[('state','not in',['Received'])]}"/>
+					</group>
+					<notebook colspan="4">
+						<page string="Assets Detail" >
+							<field name="lines" attrs="{'readonly':[('state','=','Received')]}">
+								<tree  string="Assets Detail" editable="bottom">
+									<field name="product_id"/>
+									<field name="product_cost"/>
+									<field name="qty"/>	
+									<field name="description"/>
+									<field name="serial_no"/>
+									<field name="del_date" required="1"/>   
+									<field name="rec_date" on_change="onchange_received_date(rec_date)" attrs="{'required':[('state_cond','=','Delivered')],'readonly':[('state_cond','=','Draft')]}"/>
+									<field name="if_received" 
+attrs="{'required':[('state_cond','=','Delivered')],'readonly':[('state_cond','=','Draft')]}"/>
+									<field name="state"
+attrs="{'required':[('state_cond','in','Delivered')],'readonly':[('state_cond','=','Draft')]}"/>
+									<field name="amount" attrs="{'required':[('state','=','Damaged')],'readonly':[('state_cond','=','Draft')]}"/>
+									<field name="state_cond" invisible="True"/>
+									</tree>
+									<form string="Assets Detail">   
+										<field name="state_cond"/>
+										<field name="product_id"/>
+										<field name="product_cost"/>
+										<field name="qty"/>	
+										<field name="description"/>
+										<field name="serial_no"/>			
+										<field name="del_date"/>   
+										<field name="rec_date" on_change="onchange_received_date(rec_date)"/>
+										<field name="if_received"/>
+										<field name="state"/>
+										<field name="amount"/>
+									</form>		                                 	
+								</field>
+						</page>				
+					</notebook>
+						<group col="4" colspan="4">
+								<field name="total_amount"/>
+								<field name="paid"/>	
+						</group>
+						<field name="note" colspan="4" />
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Assets -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_equip_tree">
+			<field name="name">Employee Assets Tree</field>
+			<field name="model">ijarah.hr.emp.equip</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Assets" colors="blue:state=='Open'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Assets	 -->
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_equip">
+			<field name="name">Employee Assets</field>
+			<field name="res_model">ijarah.hr.emp.equip</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_ijarah" parent="hr.menu_hr_root" name="Assets" sequence="1"/>
+		<menuitem id="menu_ijarah_hr_emp_equip" name="Employee Assets" parent="menu_hr_emp_ijarah" action="action_ijarah_hr_emp_equip"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

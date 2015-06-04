@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Deduction --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_train_exp_form">
+			<field name="name">Employee Training Expense Form</field>
+			<field name="model">ijarah.hr.emp.train.exp</field>
+			<field name="arch" type="xml">  
+				<form string="Training Expense" version="7.0">
+				<header>
+					<button name="validate_state" string="Validate" type="object" attrs="{'invisible':[('state','in',['Done'])]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name)"/>
+						<field name="emp_name"/>
+						<field name="course_name" />
+						<field name="train_type"/>
+						<field name="date_start" on_change="onchange_date_start(date_start,date_end)"/>
+						<field name="date_end" on_change="onchange_date(date_start,date_end)" />
+						<field name="days"/> 
+						<field name="no_of_hours"/>
+						<field name="amount"/>
+						<newline/>			
+					</group>	
+					<group col="4" colspan="4">
+						<field name="note" colspan="4" />
+					</group>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Deduction -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_train_exp_tree">
+			<field name="name">Employee Training Expense Tree</field>
+			<field name="model">ijarah.hr.emp.train.exp</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Deduction" colors="blue:state=='Done'">
+						<field name="name"/>
+						<field name="emp_name"/>
+						<field name="course_name"/>
+						<field name="train_type"/>
+						<field name="date_start"/>
+						<field name="date_end" />
+						<field name="amount"/>
+						<field name="state"/>
+
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Deduction	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_train_exp">
+			<field name="name">Employee Training Expense</field>
+			<field name="res_model">ijarah.hr.emp.train.exp</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation"/>
+		<menuitem id="menu_ijarah_hr_emp_train_exp" name="Training Expense" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_train_exp"/>
+		
+	</data>
+</openerp>
+  
+        
+   
+

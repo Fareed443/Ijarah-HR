@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data >
+
+	<record id="ijarah_hr_emp_visa_single" model="ijarah.visa.type">
+		<field name="name">Single</field>
+	</record>
+
+	<record id="ijarah_hr_emp_visa_multiple" model="ijarah.visa.type">
+		<field name="name">Multiple</field>
+	</record>
+
+	<record id="ijarah_hr_emp_visa_iqama" model="ijarah.visa.type">
+		<field name="name">Iqama Profession</field>
+	</record>
+
+    </data>
+</openerp>

@@ -1,0 +1,27 @@
+import ijarah_hr_employee_inherit 
+import ijarah_hr_contract_inherit
+import ijarah_hr_payslip_inherit
+import ijarah_hr_payslip_run_inherit
+import bank_statemnt_csv
+import bank_statement_excel
+import ijarah_deduction
+import ijarah_bonus
+import ijarah_ot
+import ijarah_loan
+import ijarah_equipment
+import ijarah_grades
+import ijarah_visa_type
+import ijarah_product
+import ijarah_eos
+import ijarah_hr_leave_inherit
+import report
+import hr_public_holidays
+import hr_holidays
+import ijarah_sales_com
+import sales_commission_batch
+import export_sales_commission
+import ijarah_training_expense
+import ijarah_resign_form
+import import_ijarah_contract	
+import wizard
+

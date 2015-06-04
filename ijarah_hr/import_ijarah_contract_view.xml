@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>
+		<record id="import_ijarah_cont_wiz" model="ir.ui.view">
+            <field name="name">Import Ijarah Contract</field>
+            <field name="model">import.ijarah.contract</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Import Ijarah Contract" version="7.0">
+                    <sheet>
+                        <group>
+                        	<group>
+                        		<field name='file' widget='binary'/>
+                        	</group>
+                        	<button name="import_contract_file" string="Validate" type="object" class="oe_highlight"/>
+                        </group>               
+                    </sheet>
+                </form>
+            </field>
+        </record>      
+        
+          <record id="action_import_contract_wizard" model="ir.actions.act_window">
+            <field name="name">Import Ijarah Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import.ijarah.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="import_ijarah_cont_wiz"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>  		
+
+		<menuitem id="menu_import_ijarah" parent="hr.menu_hr_root" name="Ijarah Contract"/>
+		
+        <menuitem id="menu_import_contract" parent="ijarah_hr.menu_import_ijarah" name="Import Contract" sequence="1" action="action_import_contract_wizard"/>
+        
+	</data>
+</openerp>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Visa Type --> 
+
+	<record model="ir.ui.view" id="ijarah_visa_type_form">
+		<field name="name">Ijarah Visa Type</field>
+		<field name="model">ijarah.visa.type</field>
+		<field name="arch" type="xml">  
+		<form string="Ijarah Visa Type" version="7.0">
+		<sheet>
+			<group col="4" colspan="4">                			
+				<field name="name"/>
+			</group>
+		</sheet>
+		</form>                                                       
+		</field>
+	</record>
+
+	<!-- Tree View Of Employee Bonus -->
+	<record model="ir.ui.view" id="ijarah_visa_type_tree">
+		<field name="name">Ijarah Visa Type</field>
+		<field name="model">ijarah.visa.type</field>
+		<field name="arch" type="xml">
+		<tree string="Ijarah Visa Type">
+			<field name="name"/>
+		</tree>        	               
+		</field>
+	</record>	
+		<!-- Action View of Visa Type	 -->
+
+	<record model="ir.actions.act_window" id="action_ijarah_visa_type">
+		<field name="name">Ijarah Visa Type</field>
+		<field name="res_model">ijarah.visa.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>	
+
+	<menuitem id="menu_ijarah_visa_type" parent="hr.menu_hr_configuration" name="Visa Types" sequence="11" groups="base.group_no_one"/>
+	<menuitem id="sub_menu_ijarah_visa_type" name="Visa Type Details" parent="menu_ijarah_visa_type" action="action_ijarah_visa_type"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

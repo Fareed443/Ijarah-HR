@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Bonus --> 
+
+	<record model="ir.ui.view" id="ijarah_hr_grade_form">
+		<field name="name">Ijarah Grade</field>
+		<field name="model">ijarah.hr.grade</field>
+		<field name="arch" type="xml">  
+		<form string="Ijarah Grade" version="7.0">
+		<sheet>
+			<group col="4" colspan="4">                			
+				<field name="name"/>
+				<field name="band"/>
+				<field name="grade"/>
+				<field name="roles"/>
+			</group>
+			<div>
+				<group col="3">		
+					<div>
+						Between SAR<field name="amount1" required="1" class="oe_inline" /><label string="to" class="oe_inline"/>
+						<field name="amount2" nolabel="1" required="1" class="oe_inline"/>						
+					</div>
+			</group>
+			</div>	
+		</sheet>
+		</form>                                                       
+		</field>
+	</record>
+
+	<!-- Tree View Of Employee Bonus -->
+	<record model="ir.ui.view" id="ijarah_hr_grade_tree">
+		<field name="name">Ijarah Grade</field>
+		<field name="model">ijarah.hr.grade</field>
+		<field name="arch" type="xml">
+		<tree string="Ijarah Grade">
+			<field name="name"/>
+			<field name="band"/>
+			<field name="grade"/>
+			<field name="roles"/>
+		</tree>        	               
+		</field>
+	</record>	
+		<!-- Action View of Employee Bonus	 -->
+
+	<record model="ir.actions.act_window" id="action_ijarah_hr_grade">
+		<field name="name">Ijarah Grade</field>
+		<field name="res_model">ijarah.hr.grade</field>
+		<field name="view_mode">tree,form</field>
+	</record>	
+
+	<menuitem id="menu_hr_ijarah_grade" parent="hr.menu_hr_configuration" name="Grades" sequence="10" groups="base.group_no_one"/>
+	<menuitem id="sub_menu_ijarah_hr_grade" name="Grade Details" parent="menu_hr_ijarah_grade" action="action_ijarah_hr_grade"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

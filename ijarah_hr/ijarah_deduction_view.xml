@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Deduction --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_deduct_form">
+			<field name="name">Employee Deduction Form</field>
+			<field name="model">ijarah.hr.emp.deduct</field>
+			<field name="arch" type="xml">  
+				<form string="Employee Deduction" version="7.0">
+				<header>
+					<button name="validate_state" string="Validate" type="object" attrs="{'invisible':[('state','in',['Open','Close'])]}"/>			
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Open,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name,for_month,month_end_date)"/>
+						<field name="emp_name"/>
+						<field name="job_id"/>
+						<field name="salary" />
+						<newline/>
+						<field name="note" colspan="4" />
+						<newline/>			
+					</group>
+					<notebook>
+						<page string="Calculation" >
+							<group col="4" colspan="4">
+								<field name="for_month" />
+								<field name="month_end_date" />
+								<field name="month_days" attrs="{'invisible':[('salary','=',0.00 )]}"/>
+								<field name="deduct_rule" required="1" attrs="{'invisible':[('salary','=',0.00 )]}" on_change="onchange_deduct_rule(name,salary,month_days,deduct_rule)"/>
+							</group>	
+							<group col="4" colspan="4" 
+							attrs="{'invisible':[('deduct_rule','not in',['Fixed Amount','No of Days'])]}">
+								<field name="no_of_days" attrs="{'invisible':[('deduct_rule','in',['Fixed Amount'])],
+						'required':[('deduct_rule','in',['No of Days'])]}" on_change="onchange_nod(amount_per_days,no_of_days)"/>
+
+								<field name="amount_per_days" attrs="{'invisible':[('deduct_rule','in',['Fixed Amount'])],
+												'required':[('deduct_rule','in',['No of Days'])]}"/>
+
+								<newline/>								
+								<field name="deduct_amount" required="1"/>
+								<field name="paid" attrs="{'invisible':[('state','in',['Draft'])]}"/>
+							</group>					
+						</page>				
+					</notebook>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Deduction -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_deduct_tree">
+			<field name="name">Employee Deduction Tree</field>
+			<field name="model">ijarah.hr.emp.deduct</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Deduction" colors="blue:state=='Open'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Deduction	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_deduct">
+			<field name="name">Employee Deduct</field>
+			<field name="res_model">ijarah.hr.emp.deduct</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="menu_ijarah_hr_emp_deduct" name="Employee Deduction" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_deduct"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

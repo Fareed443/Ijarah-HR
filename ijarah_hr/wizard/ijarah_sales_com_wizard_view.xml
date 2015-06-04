@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="ijarah_sales_com_wizard" model="ir.ui.view">
+            <field name="name">Sales Commission Import</field>
+            <field name="model">ijarah.sales.com.import</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales Commission Import">
+                    	<group col="4" colspan="4">
+                    		<field name="from_date"/>
+                    		<field name="to_date"/>
+			</group>
+			<button icon="gtk-ok" name="import_report" string="Import" type="object"/>             	
+                
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ijarah_sales_com_import" model="ir.actions.act_window">
+            <field name="name">Sales Commission Import</field>
+            <field name="res_model">ijarah.sales.com.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ijarah_sales_com_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Reporting -->
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation"/>
+		<menuitem id="menu_ijarah_sales_com_import" name="Import Sales Commission" parent="menu_hr_emp_loan" action="action_ijarah_sales_com_import"/>       
+	    		
+
+
+    </data>
+</openerp>

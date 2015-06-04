@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Ijarah HR EMP Search View NEw -->    
+	<record id="ijarah_hr_emp_search_view" model="ir.ui.view">
+		<field name="name">Employees</field>
+		<field name="model">hr.employee</field>
+		<field name="arch" type="xml">
+		<search string="HR Search">
+		<group expand="0" string="Group By..">
+			<filter string="Payment Type" icon="terp-personal" domain="[]" context="{'group_by':'payment_by'}"/>
+			<filter string="Active" icon="terp-personal" domain="[]" context="{'group_by':'activate'}"/>
+		</group>
+		<group expand="0" string="Filters">
+			<filter string="Ijarah" icon="terp-personal" domain="[('cont_id.type_id_char','=','Ijarah')]"/>
+			<filter string="Afras" icon="terp-personal" domain="[('cont_id.contract_type.name','=','Afras')]"/>
+			<filter string="STO" icon="terp-personal" domain="[('cont_id.contract_type.name','=','STO')]"/>
+			<filter string="State" icon="terp-personal" context="{'group_by':'state'}"/>
+		</group>           
+		</search>
+		</field>   
+	</record>    
+
+<!--Ijarah HR EMP Form View New-->
+	
+	<record model="ir.ui.view" id="ijarah_hr_emp_form_view">
+        <field name="name">Employee Form</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+		<form string="Employee Form" version="7.0" create="false">
+			<header>
+				<button name="validate_state" string="Active" type="object" attrs="{'invisible':[('state','not in',['Draft'])]}"/>
+				<button name="terminate_state" string="Terminate" type="object" attrs="{'invisible':[('state','not in',['Active'])]}"/>
+				<button name="resigned_state" string="Resigned" type="object" invisible="True"/>
+				<field name="state" widget="statusbar" statusbar_visible="Draft,Active,Resigned,Termination"/>
+			</header> 
+			<sheet> 
+            <field name="image_medium" widget='image' class="oe_left oe_avatar"/>
+            <div class="oe_title">
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <label for="arabic_name" class="oe_edit_only"/>
+                <h2>
+                    <field name="arabic_name"/>
+                </h2>
+                
+                <label for="ijarah_emp_no" class="oe_edit_only"/>
+                <h3>
+                    <field name="ijarah_emp_no"/>
+                </h3>
+                <label for="activate" class="oe_edit_only"/>
+                <h4>
+						<field name="activate" attrs="{'readonly':[('state','in',['Active'])]}"/>	
+				</h4>	
+			</div>
+            <notebook>	 
+             <page string="Public Information">
+                    <group>
+                        <group string="Contact Information">
+                            <field name="address_id" on_change="onchange_address_id(address_id)" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' string="Company" />
+                            <field name="work_email" widget="email"/>
+                            <field name="work_phone" string="Extension#"/>
+                            <field name="mobile_phone" string="Contact#"/>
+                            <field name="is_ijarah" string="Ijarah Employee" invisible="True"/>
+                            
+                        </group>
+                        <group string="Position">
+                            <field name="department_id" on_change="onchange_department_id(department_id)" required="True"/>
+                            <field name="job_id" options='{"no_open": True}' domain="[('state','!=','old')]" context="{'form_view_ref': 'hr.view_hr_job_employee_form'}"/>
+		                    <field name="parent_id"/>                            
+                        </group>
+                        
+                        <group>
+                            <field name="user_id" on_change="onchange_user(user_id)" string="Related User"/>
+                        </group>
+                    </group>
+					<group string="Payment Method">
+							<field name="payment_type"/>
+							<field name="partner_bank" on_change="onchange_partner_bank(partner_bank)" required="True"/>
+							<field name="bank_bic"/>
+							<field name="iban_no"/>
+					</group>                    
+                </page>
+                <page string="Personal Information" groups="base.group_hr_user">
+                    <group>
+                        <group string="Citizenship &amp; Other Info">
+                            <field name="country_id" options='{"no_open": True}'/>
+                            <field name="religion"/>                            
+                            <field name="identification_id" groups="base.group_hr_user"/>
+                            <field name="passport_id" groups="base.group_hr_user"/>
+                            <field name="bank_account_id"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}'/>
+							<field name="border_no"/>
+							<field name="security_no"/>
+							<field name="visa_type" on_change="onchange_visa_type(visa_type)"/>
+							<field name="visa_det"/>
+							<field name="visa_duration" attrs="{'invisible':[('visa_type','not in',['Business','Visit','Iqama'])]}"/> 
+                        </group>
+						<group string="Education">
+							<field name="qualification"/>
+							<field name="deg"/>
+							<field name="experience"/>
+						</group>	                        
+                        <group string="Status">
+                            <field name="gender"/>
+                            <field name="marital"/>
+                        </group>
+                        <group string="Birth">
+                            <field name="birthday" on_change="onchange_dob(birthday)"/>
+                        </group>
+                    </group>
+                </page>
+			<page string="Iqama Details">
+				<field name="lines_iqama" string="Iqama Detail">
+					<tree string="Iqama Details">
+						<field name="doc_name"/>
+						<field name="iqama_start_date"/>	
+						<field name="iqama_end_date" on_change="onchange_iqama_end_date(iqama_start_date,iqama_end_date)"/>
+					</tree>
+					<form string="Iqama Details" >
+						<group col="2" colspan="4">
+							<field name="attachment_ids" widget="many2many_binary"/>
+						</group>	
+						<newline/>
+						<field name="doc_name" required="1"/>
+						<field name="iqama_start_date"/>	
+						<field name="iqama_end_date" on_change="onchange_iqama_end_date(iqama_start_date,iqama_end_date)"/>
+					</form>	
+				</field>
+			</page>					
+			<page string="Certificates Attachment">
+				<field name="lines_certificate" string="Certificates Attachment">
+					<tree string="Certificates Attachment">
+						<field name="name"/>	
+					</tree>
+					<form string="Certificates Attachment" >
+						<group col="2" colspan="4">
+							<field name="emp_certificate_ids" widget="many2many_binary"/>
+						</group>	
+						<newline/>
+						<field name="name"/>	
+					</form>	
+				</field>
+			</page>
+			<page string="HR Settings" groups="base.group_hr_user">
+	         <group string="Leaves">
+				<label for="remaining_leaves"/>
+					<div>
+						<field name="remaining_leaves" class="oe_inline"/> days
+					</div>
+				</group>
+			</page>
+					       
+		</notebook>
+		</sheet>
+		</form>
+		</field>				                                                                      
+		</record> 
+
+					<!-- Tree View Cutomize HR Employee -->
+	<record id="ijarah_hr_emp_tree_view" model="ir.ui.view">
+		<field name="name">hr.employee.tree</field>
+		<field name="model">hr.employee</field>
+		<field name="arch" type="xml">
+			<tree string="Employees" create="false">
+  		       <field name="ijarah_emp_no"/>
+  		       <field name="arabic_name"/>
+				<field name="name"/>
+				<field name="work_phone"/>
+				<field name="work_email"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+				<field name="department_id"/>
+
+
+
+			</tree>
+	</field>
+	</record>
+	
+    <record model="ir.ui.view" id="ijarah_hr_kanban_view_employees">
+        <field name="name">Ijarah HR - Employess Kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="last_login"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_employee_vignette">
+                            <div class="oe_employee_image">
+                                <a type="open"><img t-att-src="kanban_image('hr.employee', 'image_medium', record.id.value)" class="oe_employee_picture"/></a>
+                            </div>
+                            <div class="oe_employee_details">
+                                <h4>
+                                    <a type="open"><field name="name"/><t t-if="record.login.raw_value"> (<field name="login"/>)</t></a>
+                                </h4>
+                                <ul>
+                                    <li id="last_login">
+                                        <span t-if="record.last_login.raw_value &amp;&amp; record.last_login.raw_value.is().today()" class="oe_kanban_button" style="font-size: 100%%">
+                                              <t t-esc="record.last_login.raw_value.toString('HH:mm')"/>
+                                        </span>
+                                    </li>
+                                    <li t-if="record.job_id.raw_value"><field name="job_id"/></li>
+                                    <li t-if="record.work_location.raw_value"><field name="work_location"/></li>
+                                    <li t-if="record.work_phone.raw_value">Tel: <field name="work_phone"/></li>
+                                    <li t-if="record.mobile_phone.raw_value">Mobile: <field name="mobile_phone"/></li>
+                                    <li t-if="record.work_email.raw_value"><a t-attf-href="mailto:#{record.work_email.value}"><field name="work_email"/></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            $('.oe_employee_picture').load(function() { if($(this).width() > $(this).height()) { $(this).addClass('oe_employee_picture_wide') } });
+                        </script>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+	
+<!-- Action View of Ijarah HR Emp Form View -->
+ 	<record model="ir.actions.act_window" id="action_ijarah_hr_emp">
+        <field name="name">Ijarah Emp</field>
+    	<field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="domain">[('is_ijarah','=',True)]</field>		
+		<field name="search_view_id" ref="ijarah_hr_emp_search_view"/>
+
+	</record>
+
+	<record id="ijarah_hr_emp_kanban_1" model="ir.actions.act_window.view">
+		<field name="sequence" eval="0"/>		
+		<field name="view_mode">kanban</field>
+		<field name="view_id" ref="ijarah_hr_kanban_view_employees"/>
+		<field name="act_window_id" ref="action_ijarah_hr_emp"/>
+	</record>	
+
+	<record id="ijarah_hr_emp_tree_1" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>		
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="ijarah_hr_emp_tree_view"/>
+		<field name="act_window_id" ref="action_ijarah_hr_emp"/>
+	</record>	
+	
+	<record id="ijarah_hr_emp_form_1" model="ir.actions.act_window.view">
+		<field eval="2" name="sequence"/>		
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="ijarah_hr_emp_form_view"/>
+		<field name="act_window_id" ref="action_ijarah_hr_emp"/>
+	</record>
+
+<!-- Menu Ijarah Emp Form -->
+
+	<menuitem id ="menu_ijarah_hr_emp" name="Employee Form" parent="hr.menu_hr_main" action="action_ijarah_hr_emp"/>    
+	    
+</data>
+</openerp>
+

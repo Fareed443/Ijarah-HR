@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee Sales Commission --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_sales_com_form">
+			<field name="name">Employee Sales Commission</field>
+			<field name="model">ijarah.hr.emp.sales.com</field>
+			<field name="arch" type="xml">  
+				<form string="Employee Sales Commission" version="7.0" create="false">
+				<header>
+				<button name="validate_state" string="Validate" type="object" attrs="{'invisible':[('state','in',['Done'])]}"/>
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Open,Done"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4">                			
+						<field name="name" on_change="onchange_empno(name)"/>
+						<field name="emp_name"/>
+						<field name="month"/>
+						<field name="amount"/>
+						<field name="paid" />
+					</group>
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee Sales Commission -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_sales_com_tree">
+			<field name="name">Employee Sales Commission Tree</field>
+			<field name="model">ijarah.hr.emp.sales.com</field>
+			<field name="arch" type="xml">
+			<tree string="Employee Sales Commission" colors="blue:state=='Open'" create="false" >
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="month"/>
+				<field name="amount"/>
+				<field name="paid"/>
+				<field name="state"/>
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee Sales Commission	 -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_sales_com">
+			<field name="name">Employee Sales Commission</field>
+			<field name="res_model">ijarah.hr.emp.sales.com</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="menu_ijarah_hr_emp_sales_com" name="Employee Sales Commission" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_sales_com" sequence="60"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

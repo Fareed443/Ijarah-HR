@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Employee End of Service --> 
+	
+		<record model="ir.ui.view" id="ijarah_hr_emp_eos_form">
+			<field name="name">Employee EOS Form</field>
+			<field name="model">ijarah.hr.emp.eos</field>
+			<field name="arch" type="xml">  
+				<form string="Employee End of Service" version="7.0">
+				<header>
+					<button name="validate_state" string="Confirm" type="object" attrs="{'invisible':[('state','in',['Confirmed','Paid'])]}"/>			
+					<field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed,Paid"/>
+				</header>  
+				<sheet>
+					<group col="4" colspan="4" string="Type of EOS">
+						<field name="eos_type" on_change="onchange_eos_type(name,eos_type)"/>
+					</group>
+					<group>					
+						<group  string="Employee Info">                			
+							<field name="name" on_change="onchange_empno(name)"/>
+							<field name="emp_name"/>
+							<field name="gender"/>
+							<field name="job_id"/>							
+						</group>
+						<group  string="Contract Detail" >
+							<field name="date_start" />
+							<field name="marriage_date" on_change="onchange_marriage_date(marriage_date,date_start,gender)"
+attrs="{'required':[('eos_type','=','Marriage')],'invisible':[('eos_type','not in',['Marriage'])]}"/>
+							<field name="child_birth_date" on_change="onchange_child_date(child_birth_date,date_start,gender)"
+attrs="{'required':[('eos_type','=','Child Birth')],'invisible':[('eos_type','not in',['Child Birth'])]}"/>
+							<field name="force_maj_date" on_change="onchange_force_date(force_maj_date,date_start)"
+attrs="{'required':[('eos_type','=','Force Majeure')],'invisible':[('eos_type','not in',['Force Majeure'])]}"/>
+
+							<field name="eos_date" on_change="onchange_date(date_start,eos_date,marriage_date,child_birth_date,force_maj_date)"/>
+							<field name="y_m_d" invisible="True"/>	
+							<field name="service_period"/>
+							<field name="noy" on_change="onchange_noy(noy,eos_type,salary,gender)" string="Entitled of" invisible="True"/>
+							<field name="no_of_month" on_change="onchange_nom(no_of_month,eos_type,salary,gender)" string="No of Days" invisible="True"/> 
+							<field name="no_of_days" on_change="onchange_nod(no_of_days,eos_type,salary,gender)" invisible="True"/> 
+						</group>						
+						<group string="Salary and Benefits">                			
+							<field name="basic"/>
+							<field name="housing_allo"/>
+							<field name="trans_allo"/>
+							<field name="salary"/>
+						</group>
+						<group  string="Remaining Leaves">                			
+							<field name="remain_leave"/>
+							<field name="leave_amount"/>
+						</group>
+
+						<group string="EOS Amount">
+							<field name="amount"/>					
+
+						</group>
+					</group>
+					<field name="note" colspan="4" />
+				</sheet>
+				</form>                                                       
+			</field>
+		</record>
+
+		<!-- Tree View Of Employee End of Service -->
+
+		<record model="ir.ui.view" id="ijarah_hr_emp_eos_tree">
+			<field name="name">Employee EOS Tree</field>
+			<field name="model">ijarah.hr.emp.eos</field>
+			<field name="arch" type="xml">
+			<tree string="Employee End of Service" colors="blue:state=='Confirmed'">
+				<field name="name"/>
+				<field name="emp_name"/>
+				<field name="job_id"/>
+				<field name="salary"/>
+				<field name="state"/>
+			</tree>        	               
+			</field>
+		</record>	
+		<!-- Action View of Employee End of Service -->
+
+		<record model="ir.actions.act_window" id="action_ijarah_hr_emp_eos">
+			<field name="name">Employee End of Service</field>
+			<field name="res_model">ijarah.hr.emp.eos</field>
+			<field name="view_mode">tree,form</field>
+		</record>	
+
+		<menuitem id="menu_hr_emp_loan" parent="hr.menu_hr_root" name="Calculation" sequence="1"/>
+		<menuitem id="sub_menu_hr_emp_eos" name="Employee End-of-Service" parent="menu_hr_emp_loan" action="action_ijarah_hr_emp_eos"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

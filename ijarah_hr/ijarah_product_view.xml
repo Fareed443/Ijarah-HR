@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!-- Form View Of Ijarah Product --> 
+
+	<record model="ir.ui.view" id="ijarah_product_form">
+		<field name="name">Ijarah Product</field>
+		<field name="model">ijarah.product</field>
+		<field name="arch" type="xml">  
+		<form string="Ijarah Product" version="7.0">
+		<sheet>
+			<group col="4" colspan="4">                			
+				<field name="name"/>
+			</group>
+		</sheet>
+		</form>                                                       
+		</field>
+	</record>
+
+	<!-- Tree View Of Ijarah Product -->
+	<record model="ir.ui.view" id="ijarah_product_tree">
+		<field name="name">Ijarah Product</field>
+		<field name="model">ijarah.product</field>
+		<field name="arch" type="xml">
+		<tree string="Ijarah Product">
+			<field name="name"/>
+		</tree>        	               
+		</field>
+	</record>	
+		<!-- Action View of Product	 -->
+
+	<record model="ir.actions.act_window" id="action_ijarah_product">
+		<field name="name">Ijarah Product</field>
+		<field name="res_model">ijarah.product</field>
+		<field name="view_mode">tree,form</field>
+	</record>	
+
+	<menuitem id="menu_ijarah_product" parent="hr.menu_hr_configuration" name="Assets" sequence="12" groups="base.group_no_one"/>
+	<menuitem id="sub_menu_ijarah_product" name="Assets" parent="menu_ijarah_product" action="action_ijarah_product"/>       
+		
+	</data>
+</openerp>
+  
+        
+   
+

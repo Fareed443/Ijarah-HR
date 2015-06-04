@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!-- Inherit in Portal Hr Employee Module-->    
+	<record id="search_view_hr_employee_2" model="ir.ui.view">
+		<field name="name">Employees</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="portal_hr_employees.portal_view_employee_filter"/>
+		<field name="arch" type="xml">
+		<xpath
+			expr="/search/group[@string='Group By...']" position="after" >
+		            <group expand="0" string="Split Contractors...">
+		                <filter string="Ijarah" icon="terp-personal" domain="[('cont_id.type_id_char','=','Ijarah')]"/>
+		                <filter string="Afras" icon="terp-personal" domain="[('cont_id.contract_type.name','in',('Afras/Direct Sales','Afras Technology'))]"/>
+		                <filter string="STO" icon="terp-personal" domain="[('cont_id.contract_type.name','=','STO')]"/>
+		            </group>
+		</xpath>
+		</field>   
+	</record> 
+
+
+<!-- Inherit in Search View of Employee -->    
+	<record id="search_view_hr_employee_1" model="ir.ui.view">
+		<field name="name">Employees</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_filter"/>
+		<field name="arch" type="xml">
+		<xpath
+			expr="/search/group[@string='Group By...']" position="after" >
+		            <group expand="0" string="Split Contractors...">
+		                <filter string="Ijarah" icon="terp-personal" domain="[('cont_id.type_id_char','=','Ijarah')]"/>
+		                <filter string="Afras" icon="terp-personal" domain="[('cont_id.contract_type.name','in',('Afras/Direct Sales','Afras Technology'))]"/>
+		                <filter string="STO" icon="terp-personal" domain="[('cont_id.contract_type.name','=','STO')]"/>
+		            </group>
+		</xpath>
+		</field>   
+	</record> 
+<!-- Sequences Employee Batches No-->
+		<record id="emp_batch_seq" model="ir.sequence.type">
+		<field name="name">Employee Batch </field>
+		<field name="code">hr.payslip.run</field>
+		</record>
+
+		<record id="emp_batch_id" model="ir.sequence">
+		<field name="name">Employee Batch Sequence</field>
+		<field name="code">hr.payslip.run</field>
+		<field name="prefix">%(year)s%(month)s%(day)s</field>
+		<field name="padding">5</field>
+		</record>
+
+
+<!-- Inherit Form view of Payslip Run --> 
+	<record id="my_hr_payslip_run_form" model="ir.ui.view">
+		<field name="name">hr.payslip.run.form</field>
+		<field name="model">hr.payslip.run</field>
+       		<field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+       		<field name="arch" type="xml">			
+			<button string="Set to Draft" name="draft_payslip_run" type="object" states="close" position="replace">
+			<button string="Set to Draft" name="draft_payslip_run" type="object" states="close" invisible="True"/>
+			</button>			
+		        <button  type="action" states="draft" string="Generate Payslips" class="oe_highlight" position="replace">
+		        <button  name="compute_sheet_1" type="object" states="to_approve" string="Approve" class="oe_highlight" attrs="{'invisible':[('state','not in',['to_approve'])]}" />
+		        <button  name="compute_sheet" type="object" states="draft" string="Confirm Salary Sheet" class="oe_highlight" attrs="{'invisible':[('state','not in',['draft'])]}"/>
+		        <button  name="%(mail.action_email_compose_message_wizard)d" type="action" states="to_approve" string="Send Email" class="oe_highlight" attrs="{'invisible':[('state','not in',['to_approve'])]}" invisible="True"/>
+
+		        <button  name="%(action_send_mail_ijarah)d" type="action" states="to_approve" string="Send Email" class="oe_highlight" attrs="{'invisible':[('state','not in',['to_approve'])]}"/>
+
+			</button>
+			<field name="slip_ids" position="replace">
+				<field name="slip_ids" invisible="True"/>
+			</field> 
+			<xpath
+				expr="/form/sheet/separator[@string='Payslips']" position="replace" >
+				<group col="4" colspan="4">	
+					<field name="desc"/>
+					<field name="value_date" attrs="{'required':[('state','in',['to_approve'])],'invisible':[('state','in',['draft'])]}"/>
+<!--					<field name="account_type" on_change="onchange_account_type(account_type,credit_account_id)" attrs="{'readonly':[('state','in',['close'])]}" required="1"/> --> 
+					<field name="account_type" invisible="True"/>
+
+					<field name="credit_account_id" attrs="{'readonly':[('state','in',['close'])]}" invisible="True" />
+					<field name="create_file_date" invisible="True"/>
+					<field name="create_file_time" invisible="True"/>
+					<field name="create_file_date_char" invisible="True"/>
+					<field name="excel_attach" invisible="True"/>
+
+				</group>
+				<group col="4" colspan="8">	
+					<field name="ref_no" /> 
+					<field name="data_csv" filename="file_name_csv" attrs="{'invisible':[('state','not in',['close'])]}"/> 
+					<field name="data_excel" filename="file_name_excel" attrs="{'invisible':[('state','not in',['to_approve'])]}"/> 
+                        		<button name="export_bank_statement_csv" string="My Test" type="object" icon="gtk-execute" class="oe_highlight" invisible="True"/>
+				</group>	
+			</xpath>
+			<xpath
+				expr="/form/sheet/field[@name='slip_ids']" position="before" >
+				<notebook>
+					<page string="Employee">
+						<field name="employee_ids" nolabel="1" attrs="{'readonly':[('state','in',['close'])]}"/> 
+					</page>
+				</notebook>
+			</xpath>
+           	</field>	     
+	</record>    
+	</data>
+</openerp>
